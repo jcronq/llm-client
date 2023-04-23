@@ -1,0 +1,1 @@
+export OPENAI_API_KEY=`security find-generic-password -s OpenaiApiKey -w`
