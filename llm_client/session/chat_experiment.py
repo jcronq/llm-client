@@ -2,7 +2,7 @@ from typing import List
 import logging
 
 # from agi.memory.conversation_history import ConversationHistory
-from agi.types.openai import Message
+from llm_client.types.openai import Message
 
 logger = logging.getLogger()
 
