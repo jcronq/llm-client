@@ -1,0 +1,50 @@
+model: "gpt-3.5-turbo"
+temperature: 0.0
+system_prompts:
+  - "Return only the desired text"
+query_template: "Dolor Ipsum Salem alt. Sally sells seashells. Return to me the {} this sentence. Peter picked a peck of peppers."
+expected_result: "Sally sells seashells."
+
+perturbations:
+  - default_label: "single-line"
+  - query_filler: "sentence above"
+  - query_filler: "sentence before"
+  - query_filler: "sentence that precedes"
+  - query_filler: "sentence prior to"
+  - query_filler: "previous sentence to"
+
+  - query_filler: "sentence immediately above"
+  - query_filler: "sentence immediately before"
+  - query_filler: "sentence that immediately precedes"
+  - query_filler: "sentence immediately prior to"
+  - query_filler: "immediately previous sentence to"
+
+  - query_template: "Dolor Ipsum Salem alt. Sally sells seashells.\nReturn to me the {} this sentence.\nPeter picked a peck of peppers."
+    default_label: "instr-separate-line"
+
+  - query_filler: "sentence above"
+  - query_filler: "sentence before"
+  - query_filler: "sentence that precedes"
+  - query_filler: "sentence prior to"
+  - query_filler: "previous sentence to"
+
+  - query_filler: "sentence immediately above"
+  - query_filler: "sentence immediately before"
+  - query_filler: "sentence that immediately precedes"
+  - query_filler: "sentence immediately prior to"
+  - query_filler: "immediately previous sentence to"
+
+  - query_template: "Dolor Ipsum Salem alt.\nSally sells seashells.\nReturn to me the {} this sentence.\nPeter picked a peck of peppers."
+    default_label: "single-sentence-per-line"
+
+  - query_filler: "sentence above"
+  - query_filler: "sentence before"
+  - query_filler: "sentence that precedes"
+  - query_filler: "sentence prior to"
+  - query_filler: "previous sentence to"
+
+  - query_filler: "sentence immediately above"
+  - query_filler: "sentence immediately before"
+  - query_filler: "sentence that immediately precedes"
+  - query_filler: "sentence immediately prior to"
+  - query_filler: "immediately previous sentence to"

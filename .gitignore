@@ -1,2 +1,4 @@
 *.pyc
 .env
+results.json
+embeddings.json

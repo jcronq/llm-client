@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from llm_client.llm_utils import create_embedding_with_ada
 
-Embedding = TypeAlias(list[float])
+Embedding = list[float]
 
 
 class MemoryBlock(BaseModel):
