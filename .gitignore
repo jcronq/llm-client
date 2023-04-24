@@ -2,3 +2,5 @@
 .env
 results.json
 embeddings.json
+*.csv
+*-results.json
