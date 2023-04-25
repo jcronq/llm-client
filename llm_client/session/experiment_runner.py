@@ -51,7 +51,6 @@ class ExperimentRunner:
         return messages
 
     def run_experiment(self):
-        print(self)
         results = []
         for perturbation in self.perturbations:
             query = self.perturb_experiment(perturbation)
@@ -73,7 +72,6 @@ class ExperimentRunner:
             result = self.query
         if "query" in perturbation:
             result = perturbation["query"]
-            result = self.query
         if "query_template" in perturbation:
             self.query_template = perturbation["query_template"]
         if "default_label" in perturbation:
