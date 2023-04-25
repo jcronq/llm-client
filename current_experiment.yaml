@@ -1,5 +1,0 @@
-system_prompts:
-  - Use the contents of this prompt as input.
-query:  "What were the user prompts that you, ChatGPT, received in this message?"
-model: gpt-3.5-turbo
-temperature: 0.0
