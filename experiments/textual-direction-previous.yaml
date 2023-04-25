@@ -13,6 +13,7 @@ perturbations:
   - query_filler: "sentence prior to"
   - query_filler: "previous sentence to"
 
+  - default_label: "single-line,immediate"
   - query_filler: "sentence immediately above"
   - query_filler: "sentence immediately before"
   - query_filler: "sentence that immediately precedes"
@@ -28,6 +29,7 @@ perturbations:
   - query_filler: "sentence prior to"
   - query_filler: "previous sentence to"
 
+  - default_label: "instr-separate-line,immediate"
   - query_filler: "sentence immediately above"
   - query_filler: "sentence immediately before"
   - query_filler: "sentence that immediately precedes"
@@ -43,6 +45,7 @@ perturbations:
   - query_filler: "sentence prior to"
   - query_filler: "previous sentence to"
 
+  - default_label: "single-sentence-per-line,immediate"
   - query_filler: "sentence immediately above"
   - query_filler: "sentence immediately before"
   - query_filler: "sentence that immediately precedes"

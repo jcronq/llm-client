@@ -25,6 +25,7 @@ class ExperimentRunner:
         self.perturbations = data.get("perturbations", [])
 
         self.expected_result = data.get("expected_result", None)
+        self.default_label = data.get("default_label", "")
 
     def add_system_prompt(self, system_prompt: str):
         self._system_prompt.append(system_prompt)
@@ -75,6 +76,8 @@ class ExperimentRunner:
             result = self.query
         if "query_template" in perturbation:
             self.query_template = perturbation["query_template"]
+        if "default_label" in perturbation:
+            self.default_label = perturbation["default_label"]
         if "temperature" in perturbation:
             self.set_temperature(perturbation["temperature"])
         if "model" in perturbation:
@@ -91,6 +94,7 @@ class ExperimentRunner:
             "model": self.model,
             "response": result,
             "expected": self.expected_result,
+            "labels": self.default_label,
         }
 
     @property
