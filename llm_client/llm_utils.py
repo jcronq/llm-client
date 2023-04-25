@@ -91,7 +91,7 @@ def create_chat_completion(
             if CFG.debug_mode:
                 print(f"{Fore.RED}Error: ", f"Reached rate limit, passing...{Fore.RESET}")
             if not warned_user:
-                logger.double_check(
+                logger.warn(
                     f"Please double check that you have setup a {Fore.CYAN + Style.BRIGHT}PAID{Style.RESET_ALL} OpenAI API Account. "
                     + f"You can read more here: {Fore.CYAN}https://github.com/Significant-Gravitas/Auto-GPT#openai-api-keys-configuration{Fore.RESET}"
                 )

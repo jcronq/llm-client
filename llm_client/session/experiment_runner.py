@@ -4,8 +4,10 @@ Template for experimenting with the efficacy of various System Prompts.
 from typing import Optional
 from pathlib import Path
 import logging
-
 import yaml
+
+import numpy as np
+
 from llm_client.memory.conversation_history import ConversationHistory
 from llm_client.types.openai import Message
 from llm_client.llm_utils import create_chat_completion
@@ -49,6 +51,11 @@ class ExperimentRunner:
 
         messages.append(Message(role="user", content=query))
         return messages
+
+    def calculate_experiment_similarity(self):
+        for perturbation in self.perturbations:
+            pass
+            # TODO: Pick up here
 
     def run_experiment(self):
         results = []
