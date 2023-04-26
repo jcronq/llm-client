@@ -1,15 +1,13 @@
 from typing import Any
-import os
-import openai
-import subprocess
-from dotenv import load_dotenv
-from pathlib import Path
-import json
 from datetime import datetime
+import json
 import csv
+from dotenv import load_dotenv
+
+import smtplib
+from email.message import EmailMessage
 
 from llm_client.config import Config
-
 from llm_client.abilities.github_search import get_merged_issues_last_day
 from llm_client.session.session_base import SessionBase
 
@@ -33,17 +31,29 @@ def save_dict_to_csv(data: dict[str, Any], filename: str):
             writer.writerow(row)
 
 
+def send_email(recipient_email, subject, body):
+    # Create the email message
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg["Subject"] = subject
+    msg["From"] = cfg.sender_email
+    msg["To"] = recipient_email
+
+    # Connect to the Gmail SMTP server
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        # Log in to your Gmail account
+        server.login(cfg.sender_email, cfg.sender_email_password)
+
+        # Send the email
+        server.send_message(msg)
+
+
 def main():
     repo_url = "https://github.com/Significant-Gravitas/Auto-GPT"
     merged_issues = get_merged_issues_last_day(repo_url)
-    print(len(merged_issues))
-    breakpoint()
 
     issue_summaries = []
     if merged_issues:
-        # daily_issues = "\n".join([f'- Issue #{issue["number"]}: {issue["title"]}' for issue in merged_issues])
-        # daily_issues = json.dumps(merged_issues, indent="  ")
-        # print(daily_issues)
         session = SessionBase(llm_model="gpt-3.5-turbo", temperature=0.7)
         session.add_system_prompt("Summarize the given text.")
         session.add_system_prompt("Parse message as a json object.")
@@ -65,6 +75,9 @@ def main():
         session.query = "{}\n\nReturn a single paragraph summary of these issues.".format("\n".join(issue_summaries))
         result = session.execute()
         print(result)
+
+        body = "Here is a summary of all the changes to Auto-GPT over the last 24 hours.\n" "\n" f"{result}\n"
+        send_email(cfg.sender_email, "Auto-GPT Change Summary", body)
     else:
         print("No merged issues found in the last day.")
 

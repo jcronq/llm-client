@@ -26,6 +26,9 @@ class Config:
         self.allow_downloads = False
         self.skip_news = False
 
+        self.sender_email = os.getenv("SENDER_EMAIL", "")
+        self.sender_email_password = os.getenv("SENDER_EMAIL_PASSWORD", "")
+
         self.ai_settings_file = os.getenv("AI_SETTINGS_FILE", "ai_settings.yaml")
         self.fast_llm_model = os.getenv("FAST_LLM_MODEL", "gpt-3.5-turbo")
         self.smart_llm_model = os.getenv("SMART_LLM_MODEL", "gpt-4")
