@@ -10,6 +10,7 @@ from email.message import EmailMessage
 from llm_client.config import Config
 from llm_client.abilities.github_search import get_merged_issues_last_day
 from llm_client.session.session_base import SessionBase
+from llm_client.storage.sqlite import PullRequestDatabase
 
 
 load_dotenv()
@@ -49,6 +50,7 @@ def send_email(recipient_email, subject, body):
 
 
 def main():
+    db = PullRequestDatabase("pull_requests.db")
     repo_url = "https://github.com/Significant-Gravitas/Auto-GPT"
     merged_issues = get_merged_issues_last_day(repo_url)
 
@@ -64,19 +66,36 @@ def main():
         session.add_system_prompt("Provide summary regarding the overall goals of the changes.")
         session.add_system_prompt("Lump issues with similar objectives together in the summary.")
         for issue in merged_issues:
-            session.query = (
-                f"{json.dumps(issue, cls=DateTimeEncoder)}\n\nReturn a single paragraph summary of this issue."
-            )
-            summary = session.execute()
-            issue_summaries.append(summary)
-            print(summary)
+            summary = db.get_pull_request(issue["number"])
+            if summary is None:
+                session.query = (
+                    f"{json.dumps(issue, cls=DateTimeEncoder)}\n\nReturn a single paragraph summary of this issue."
+                )
+                summary = session.execute()
+                db.add_pull_request(issue["number"], summary, datetime.now())
+                issue["summary"] = summary
+                print(summary)
+            else:
+                (issue["summary"],) = summary
+                print(summary[0])
             print()
 
-        session.query = "{}\n\nReturn a single paragraph summary of these issues.".format("\n".join(issue_summaries))
+        session.query = "{}\n\nReturn a single paragraph summary of these issues.".format(
+            "\n".join([issue["summary"] for issue in merged_issues])
+        )
         result = session.execute()
         print(result)
 
-        body = "Here is a summary of all the changes to Auto-GPT over the last 24 hours.\n" "\n" f"{result}\n"
+        issues_str = "\n\n".join([f"{issue['title']}:\n{issue['summary']}" for issue in merged_issues])
+        body = (
+            "Here is a summary of all the changes to Auto-GPT over the last 24 hours.\n"
+            "\n"
+            f"{result}\n"
+            "\n"
+            "Issue Summaries\n"
+            f"\n"
+            f"{issues_str}"
+        )
         send_email(cfg.sender_email, "Auto-GPT Change Summary", body)
     else:
         print("No merged issues found in the last day.")
