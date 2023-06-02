@@ -1,8 +1,6 @@
-# Determine which is better, Do not or don't.  Test other contractions too.
-
 model: "gpt-3.5-turbo"
 temperature: 0.0
-query_template: "Mary {} have a cat.  You can ask Mary a single question. What question would you ask mary to determine if she likes cats? You can not ask her directly if she likes cats, or how she feels about them."
+query_template: "You can ask Mary a single question. What question would you ask mary to determine if she likes cats? You can not ask her directly if she likes cats, or how she feels about them."
 system_prompts:
   - "Think about the statement, then answer the question."
   - "Give justification for your answer."

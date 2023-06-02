@@ -4,7 +4,7 @@ Template for experimenting with the efficacy of various System Prompts.
 from typing import List
 import logging
 
-from llm_client.memory.conversation_history import ConversationHistory
+from llm_client.memory.memory import ConversationHistory
 from llm_client.types.openai import Message
 from llm_client.llm_utils import create_chat_completion
 

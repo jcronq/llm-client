@@ -8,7 +8,6 @@ import yaml
 
 import numpy as np
 
-from llm_client.memory.conversation_history import ConversationHistory
 from llm_client.types.openai import Message
 from llm_client.llm_utils import create_chat_completion
 

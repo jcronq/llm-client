@@ -1,8 +1,8 @@
-from typing import TypedDict
 from enum import Enum
+from pydantic import BaseModel
 
 
-class Message(TypedDict):
+class Message(BaseModel):
     role: str
     content: str
 

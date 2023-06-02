@@ -10,7 +10,7 @@ from email.message import EmailMessage
 from llm_client.config import Config
 from llm_client.abilities.github_search import get_merged_issues_last_day
 from llm_client.session.session_base import SessionBase
-from llm_client.storage.sqlite import PullRequestDatabase
+from llm_client.storage.sqlite import SqliteStorage
 
 
 load_dotenv()
@@ -50,7 +50,7 @@ def send_email(recipient_email, subject, body):
 
 
 def main():
-    db = PullRequestDatabase("pull_requests.db")
+    db = SqliteStorage("pull_requests.db")
     repo_url = "https://github.com/Significant-Gravitas/Auto-GPT"
     merged_issues = get_merged_issues_last_day(repo_url)
 
